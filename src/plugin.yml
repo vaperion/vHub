@@ -1,0 +1,7 @@
+name: vHub
+version: 1.0-SNAPSHOT
+authors: [vaperion, marvintheskid]
+main: me.vaperion.plugins.Hub
+website: TODO
+softdepend:
+  - Vault

@@ -1,0 +1,140 @@
+messages:
+  no-permission: "&cYou do not have permission to execute this command."
+  join:
+    clearchat-amount: 100 # Sends X blank messages to the player
+    send-welcome: true
+    welcome:
+      - "&7&m--------------------------------"
+      - "&rWelcome to &a&lvHub&r!"
+      - ""
+      - "&aWebsite: &r%website%"
+      - "&aStore: &r%store%"
+      - "&7&m--------------------------------"
+  queue:
+    lines:
+      - "&7&m------------------------------------------"
+      - "You are currently in the queue for &a%queue_name%&r.{{paused}}"
+      - "You are position &a#%queue_pos%&r/&a%queue_max%&r."
+      - ""
+      - "&aQueue time sucks?"
+      - "Purchase a rank at &a%store%"
+      - "&7&m------------------------------------------"
+    success: "&aYou have successfully joined the queue for %queue%."
+    left: "&aYou have successfully left the queue for %queue%."
+    removed: "&cYou have been removed from the queue for %queue%."
+    full: "&cThe queue for %queue% is full."
+    not-found: "&cThe queue could not be found."
+    already-queued: "&cYou are already in a queue for %queue%."
+    not-queued: "&cYou are not in a queue."
+
+settings:
+  server-id: "Hub-1"
+  website: "vaperion.me"
+  store: "store.vaperion.me"
+
+items:
+  0:
+    name: "&a&lServer Selector"
+    item: DIAMOND_SWORD
+    durability: 0
+    lore:
+      - "&7&m----------------------"
+      - "&7Right click to open the server selector."
+      - "&7&m----------------------"
+    action: selector
+
+selector:
+  title: "&a&lServer Selector"
+  size: 9
+  items:
+    0:
+      name: "&a&lFirst Server"
+      item: DIAMOND_SWORD
+      durability: 0
+      lore:
+        - "first server"
+      server: "first" # if "none" it will not send the player
+
+variables:
+  # Types:
+  # "is-paused" returns: true - if paused, false - if not paused
+  # "global-players" returns: global player count
+  # "rank-priority" returns: the player's rank's priority
+  #
+  # Scopes:
+  # You can use scopes ("[scope]::[type]") so the variables only work in the specified scope.
+  # - queue, provider
+  #
+  # Conditions:
+  # "=[parameter]" checks if the value equals the parameter
+  # ">[parameter]" checks if the value is greater than the parameter
+  # "<[parameter]" checks if the value is less than the parameter
+  #
+  # NOTE: DO NOT INCLUDE ",[],()
+  paused:
+    type: "is-paused"
+    fallback: ""
+    results:
+      0:
+        condition: "=true"
+        text: " &7(Paused)"
+
+queue:
+  # Types: BUILT-IN, EZQUEUE, PORTAL
+  provider: BUILT-IN
+  built-in:
+    send-delay: 500
+
+queues:
+  0:
+    server: "first"
+    limit: 500
+
+permissions:
+  # Disclaimer: The rank identifiers are CASE-SENSITIVE, so be careful about it.
+  ranks:
+    owner:
+      color: "&4"
+      display: "Owner"
+      coloredDisplay: "&4Owner"
+      priority: 99
+    admin:
+      color: "&c"
+      display: "Admin"
+      coloredDisplay: "&cAdmin"
+      priority: 50
+    default:
+      color: "&f"
+      display: "Default"
+      coloredDisplay: "&fDefault"
+      priority: 0
+
+scoreboard:
+  type: MODERN # Types: KOHI (desc., starts from 15), VIPER (desc., starts from -1), MODERN (asc., starts from 1)
+  refresh-rate: 2 # The provider will refresh every X ticks (20 ticks = 1 second)
+  title: "&a&lvHub"
+  footer-enabled: true
+  lines:
+    normal:
+      - "&7&m----------------------"
+      - "&a&lOnline Players"
+      - "%global%"
+      - ""
+      - "&a&lRank"
+      - "%colored_rank%"
+      - "&7&m----------------------"
+    queue:
+      - "&7&m----------------------"
+      - "&a&lOnline Players"
+      - "%global%"
+      - ""
+      - "&a&lRank"
+      - "%colored_rank%"
+      - ""
+      - "&a&lQueue"
+      - "Server: %queue_server%"
+      - "Position: #%queue_pos%/%queue_max%"
+      - "&7&m----------------------"
+    footer:
+      - ""
+      - "&7&o%website%"
